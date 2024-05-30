@@ -66,7 +66,7 @@ res$Power # power
 ## References
 
 - Cao, H., & Kosorok, M. R. (2011). Simultaneous critical values for t-tests in very high dimensions. Bernoulli, 17, 347.
-- Wang, P., Lyu, P., Peddada, S., Cao, H. (2023+). A powerful methodology for analyzing correlated high dimensional data using factor models. Results not shown.
+- Wang, P., Lyu, P., Peddada, S., Cao, H. (2024+). A powerful methodology for analyzing correlated high dimensional data using factor models. Results not shown.
 
 ## License
 
