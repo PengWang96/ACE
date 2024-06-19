@@ -6,7 +6,8 @@
 #' If X is present, then perform the two-sample test; otherwise, perform one-sample test.
 #' @param H0_indicator (Optional) A \eqn{p}-dimensional vector containing only 0 and 1.
 #' A value of 1 means the variable/gene is non-null and a value of 0 means the gene is null.
-#' @param gama FDR control level.
+#' @param gama FDR control level. The default is 0.05.
+#' @param h_max The upper bound of the number of latent factors specified by the user. The default is 20.
 #'
 #' @return An object with S3 class \code{ACE} containing the following items will be returned:
 #' \describe{
@@ -22,9 +23,10 @@
 #'
 #' @importFrom stats cov pnorm quantile
 #' @importFrom quantreg rq
+#' @importFrom irlba irlba
 #'
 #' @references Cao, H., & Kosorok, M. R. (2011). Simultaneous critical values for t-tests in very high dimensions. Bernoulli, 17, 347.
-#' @references Wang, P., Lyu, P., Peddada, S., Cao, H. (2023+). A powerful methodology for analyzing correlated high dimensional data using factor models. results not shown.
+#' @references Wang, P., Lyu, P., Peddada, S., Cao, H. (2024+). A powerful methodology for analyzing correlated high dimensional data using factor models. results not shown.
 #'
 #' @examples
 #' library(mvtnorm); library(quantreg)
@@ -45,7 +47,7 @@
 #' @export
 #'
 
-ACE <- function(Z, X, H0_indicator, gama){
+ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
   if (missing(X)) {
     Y <- Z
     n <- ncol(Y)
@@ -59,14 +61,11 @@ ACE <- function(Z, X, H0_indicator, gama){
   }
 
   Yba <- apply(Y,1,mean); T <- (sqrt(n)* Yba); deltaa <- cov(t(Y))
-  h_max <- 20
-  pca <- svd(deltaa, nu=0, nv = h_max)
+
+  # pca <- svd(deltaa, nu=0, nv = h_max)
+  pca <- irlba(deltaa, nv = h_max, symmetric = TRUE)
   lam_sort <- pca$d
   gamma_norm <- pca$v
-
-  # pca <- cppSvd(deltaa) # U %*% diag(S) %*% t(V)
-  # gamma_norm <- pca$U
-  # lam_sort <- pca$S
 
   bizhi <- lam_sort[1:(h_max-1)]/lam_sort[2:h_max]
   h_hat <- which.max(bizhi)

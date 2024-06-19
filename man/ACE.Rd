@@ -4,7 +4,7 @@
 \alias{ACE}
 \title{Analysis of Correlated High-Dimensional Expression (ACE) Data}
 \usage{
-ACE(Z, X, H0_indicator, gama)
+ACE(Z, X, H0_indicator, gama = 0.05, h_max = 20)
 }
 \arguments{
 \item{Z}{The observed data matrix with the variables in rows and samples in columns. It is a \eqn{p}-by-\eqn{n_1} matrix.}
@@ -15,7 +15,9 @@ If X is present, then perform the two-sample test; otherwise, perform one-sample
 \item{H0_indicator}{(Optional) A \eqn{p}-dimensional vector containing only 0 and 1.
 A value of 1 means the variable/gene is non-null and a value of 0 means the gene is null.}
 
-\item{gama}{FDR control level.}
+\item{gama}{FDR control level. The default is 0.05.}
+
+\item{h_max}{The upper bound of the number of latent factors specified by the user. The default is 20.}
 }
 \value{
 An object with S3 class \code{ACE} containing the following items will be returned:
@@ -53,5 +55,5 @@ res$Power # power
 \references{
 Cao, H., & Kosorok, M. R. (2011). Simultaneous critical values for t-tests in very high dimensions. Bernoulli, 17, 347.
 
-Wang, P., Lyu, P., Peddada, S., Cao, H. (2023+). A powerful methodology for analyzing correlated high dimensional data using factor models. results not shown.
+Wang, P., Lyu, P., Peddada, S., Cao, H. (2024+). A powerful methodology for analyzing correlated high dimensional data using factor models. results not shown.
 }
