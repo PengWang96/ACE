@@ -48,7 +48,7 @@ The function returns an object with S3 class `ACE` containing several important 
 Here is an example of how to use the `ACE()` function:
 
 ```R
-library(mvtnorm); library(quantreg)
+library(mvtnorm); library(quantreg); library(ACE)
 p <- 200; n <- 100; h <- 3 # the number of variables, samples and factors
 berlii <- rbinom(p, 1, 0.2) # 1 means the variable is non-null and 0 means it is null.
 index0 <- which(berlii == 0); index1 <- which(berlii == 1)
