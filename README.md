@@ -15,11 +15,11 @@ devtools::install_github("PengWang96/ACE")
 
 ## Loading the ACE Package
 
-After installing the ACE package, you can load it into your R environment using the `library()` function. However, due to a name conflict with another package in the R community, you should load this package using the name `ACE.CoCo`. Here's how you do it:
+After installing the ACE package, you can load it into your R environment using the `library()` function.
 
 ```R
 # Load the ACE package
-library(ACE.CoCo)
+library(ACE)
 ```
 
 Once the package is loaded, you can use the functions provided by the ACE package in your R scripts. Remember, if you encounter any errors during the loading process, it might be because the package is not installed. In that case, refer to the installation instructions above.
@@ -31,7 +31,7 @@ If you want to check whether the ACE package is successfully loaded, you can use
 search()
 ```
 
-In the output, you should see "package:ACE.CoCo", which indicates that the ACE package is successfully loaded and ready to use.
+In the output, you should see "package:ACE", which indicates that the ACE package is successfully loaded and ready to use.
 
 ## Usage
 
@@ -40,7 +40,8 @@ The main function in this package is `ACE()`. This function takes in the followi
 - `Z`: The observed data matrix with the variables in rows and samples in columns. It is a p-by-n1 matrix.
 - `X`: (Optional) The observed data matrix with the variables in rows and samples in columns. It is a p-by-n2 matrix. If X is present, then perform the two-sample test; otherwise, perform one-sample test.
 - `H0_indicator`: (Optional) A p-dimensional vector containing only 0 and 1. A value of 1 means the variable/gene is non-null and a value of 0 means the gene is null.
-- `gama`: FDR control level.
+- `gama`: FDR control level. The default is 0.05.
+- `h_max`: The upper bound of the number of latent factors specified by the user. The default is 20.
 
 The function returns an object with S3 class `ACE` containing several important statistics and estimations.
 
