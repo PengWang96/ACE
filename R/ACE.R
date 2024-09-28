@@ -8,6 +8,10 @@
 #' A value of 1 means the variable/gene is non-null and a value of 0 means the gene is null.
 #' @param gama FDR control level. The default is 0.05.
 #' @param h_max The upper bound of the number of latent factors specified by the user. The default is 20.
+#' @param h_fix (Optional) The fixed number of latent factors specified by user.
+#' If `NULL`, the number of latent factors is estimated from the data. The default is `NULL`.
+#' @param reg The type of regularization to use. It can be either `"L1"` for L1 regularization using quantile regression,
+#' or `"L2"` for L2 regularization using least squares. The default is `"L1"`.
 #'
 #' @return An object with S3 class \code{ACE} containing the following items will be returned:
 #' \describe{
@@ -19,6 +23,8 @@
 #' \item{\code{Threshold}}{A critical value. When absolute factor-adjusted statistics is larger than the threshold, we reject it.}
 #' \item{\code{Estimated_number_factor}}{The estimated number of factors.}
 #' \item{\code{pai1_hat}}{The estimated proportion of non-nulls.}
+#' \item{\code{Estimate_factor_loadings}}{The estimated factor loadings.}
+#' \item{\code{Estimate_factors}}{The estimated factors.}
 #' }
 #'
 #' @importFrom stats cov pnorm quantile
@@ -47,14 +53,22 @@
 #' @export
 #'
 
-ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
+ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg = "L1"){
   if (missing(X)) {
     Y <- Z
     n <- ncol(Y)
     p <- nrow(Y)
   } else {
-    p <- nrow(Z); n1 <- ncol(Z); n2 <- ncol(X); n <- n1
-    Y <- matrix(0, p, n)
+    p <- nrow(Z); n1 <- ncol(Z); n2 <- ncol(X)
+    if (n1 <= n2) {
+      n <- n1
+      Y <- matrix(0, p, n)
+    } else {
+      Y <- Z
+      Z <- X
+      X <- Y
+    }
+
     for (jy in 1:n1){
       Y[,jy] <- Z[,jy] - sqrt(n1/n2)*X[,jy] + apply(X[,1:n1], 1, sum)/sqrt(n1*n2) - apply(X,1,mean)
     }
@@ -67,8 +81,12 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
   lam_sort <- pca$d
   gamma_norm <- pca$v
 
-  bizhi <- lam_sort[1:(h_max-1)]/lam_sort[2:h_max]
-  h_hat <- which.max(bizhi)
+  if (is.null(h_fix)) {
+    bizhi <- lam_sort[1:(h_max-1)] / lam_sort[2:h_max]
+    h_hat <- which.max(bizhi)
+  } else {
+    h_hat <- h_fix
+  }
 
   if (h_hat == 1){
     B_hat <- gamma_norm[,1:h_hat] * sqrt(lam_sort[1:h_hat])
@@ -76,9 +94,14 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
     B_hat <- gamma_norm[,1:h_hat] %*% diag(sqrt(lam_sort[1:h_hat]))
   }
 
-  W0_hat <- matrix(0, h_hat, n)
-  for (jjj in 1:n){
-    W0_hat[,jjj] <- rq(Y[,jjj] ~ B_hat - 1, tau = 0.5)$coef
+
+  if (reg == "L1") {
+    W0_hat <- matrix(0, h_hat, n)
+    for (jjj in 1:n) {
+      W0_hat[, jjj] <- rq(Y[, jjj] ~ B_hat - 1, tau = 0.5)$coef
+    }
+  } else if (reg == "L2") {
+    W0_hat <- solve(t(B_hat) %*% B_hat) %*% t(B_hat) %*% Y
   }
 
   W_piao <- rbind(rep(1,n), W0_hat)
@@ -93,7 +116,7 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
   statistics <- T_k/bbb
   abs_stat <- abs(statistics)
 
-  if (n <= 100) {
+  if (n < 100) {
     aaaaaaa <- seq(0.3, 5, by = 0.001)
     pai <- function(c){
       (sapply(c,
@@ -131,7 +154,8 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
     FDP <- 2*p*pnorm(t_fdr_hat, lower.tail = F) / R
     return(list("FDP" = FDP, "Rejection" = R, "Adjusted_mean_difference" = mu_hat,
                 "Adjusted_statistics" = statistics, "Threshold" = t_fdr_hat,
-                "Estimated_number_factor" = h_hat, "pai1_hat" = pai1))
+                "Estimated_number_factor" = h_hat, "pai1_hat" = pai1,
+                "Estimate_factor_loadings" = B_hat, "Estimate_factors" = W0_hat))
   } else {
     index_0 <- which(H0_indicator == 0)
     false_reject <- which(abs(T_k[index_0]/bbb[index_0]) >= t_fdr_hat)
@@ -144,6 +168,7 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20){
     power <- S/(p - length(index_0))
     return(list("FDP" = true_FDP, "Power" = power, "Rejection" = R,
                 "Adjusted_mean_difference" = mu_hat, "Adjusted_statistics" = statistics,
-                "Threshold" = t_fdr_hat, "Estimated_number_factor" = h_hat, "pai1_hat" = pai1))
+                "Threshold" = t_fdr_hat, "Estimated_number_factor" = h_hat, "pai1_hat" = pai1,
+                "Estimate_factor_loadings" = B_hat, "Estimate_factors" = W0_hat))
   }
 }
