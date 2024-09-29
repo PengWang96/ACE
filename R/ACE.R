@@ -67,6 +67,7 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
       Y <- Z
       Z <- X
       X <- Y
+      n1 <- ncol(Z); n2 <- ncol(X); n <- n1
     }
 
     for (jy in 1:n1){
