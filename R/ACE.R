@@ -77,6 +77,10 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
   Yba <- apply(Y,1,mean); T <- (sqrt(n)* Yba); deltaa <- cov(t(Y))
 
   # pca <- svd(deltaa, nu=0, nv = h_max)
+  if (h_max >= p || h_max >= n) {
+    h_max <- min(p, n) - 1
+    warning(sprintf("h_max should be smaller than both p and n. It has been automatically set to %d.", h_max))
+  }
   pca <- irlba(deltaa, nv = h_max, symmetric = TRUE)
   lam_sort <- pca$d
   gamma_norm <- pca$v
@@ -128,7 +132,10 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
                                           2 * pnorm(c, lower.tail = F))
     }
     paii <- pai(aaaaaaa)
-    pai1 <- max(paii[paii >= 0 & paii <= 1])
+    valid_values <- paii[paii >= 0 & paii <= 1]
+    pai1 <- ifelse(all(is.na(valid_values)) || length(valid_values) == 0,
+                   0,
+                   max(valid_values, na.rm = TRUE))
 
     s0 <- 0.1*mean(quantile(bbb, seq(0, 1-pai1, by = 0.001)))
     sigma_hat <- diag((bbb + s0)^2)
@@ -146,7 +153,7 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
   }
   f_t_hatt <- f_t_hat(aaaaaa)
   index <- which(f_t_hatt <= 0)[1]
-  t_fdr_hat <- ifelse(length(index) <= 0, Inf, aaaaaa[index])
+  t_fdr_hat <- ifelse(length(index) <= 0 || is.na(index), Inf, aaaaaa[index])
 
   R <- sum(abs_stat >= t_fdr_hat)
 
