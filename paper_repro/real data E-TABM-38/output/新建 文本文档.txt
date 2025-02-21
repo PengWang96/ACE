@@ -1,0 +1,23 @@
+针对与神经母细胞瘤（neuroblastoma）基因表达数据研究相关的通路，以下是与神经系统发育、神经退行性疾病、神经递质信号传导等相关的前15个通路：
+
+hsa04360: Axon guidance - 与神经轴突引导和神经发育密切相关，可能与神经母细胞瘤的生长和迁移机制相关。
+hsa04728: Dopaminergic synapse - 多巴胺突触的功能在神经系统和神经肿瘤中可能起到重要作用。
+hsa04725: Cholinergic synapse - 胆碱能突触的信号在神经母细胞瘤中可能影响细胞的增殖和存活。
+hsa04723: Retrograde endocannabinoid signaling - 逆行性内源性大麻素信号在神经母细胞瘤中的作用可能影响细胞的生长和分化。
+hsa04726: Serotonergic synapse - 血清素突触功能与神经母细胞瘤的行为有一定关联。
+hsa04724: Glutamatergic synapse - 谷氨酸能突触在神经母细胞瘤的信号传导中可能发挥作用。
+hsa04727: GABAergic synapse - GABA能突触信号可能与神经母细胞瘤的细胞增殖和生长有关。
+hsa04370: VEGF signaling pathway - 血管内皮生长因子（VEGF）信号通路与肿瘤的血管生成和肿瘤生长密切相关。
+hsa05014: Amyotrophic lateral sclerosis - 该通路涉及神经退行性疾病，可能与神经母细胞瘤的细胞死亡和退化过程有关。
+hsa05020: Prion disease - 虽然主要与神经退行性疾病相关，但其对蛋白质折叠和聚集的研究可能与肿瘤细胞的异常蛋白质行为相关。
+hsa05012: Parkinson disease - 帕金森病与神经退行性疾病机制相关，可能与神经母细胞瘤的细胞自噬或蛋白质处理有关。
+hsa05017: Spinocerebellar ataxia - 该通路涉及神经退行性疾病，可能对神经母细胞瘤的生物学行为有所影响。
+hsa04010: MAPK signaling pathway - MAPK信号通路与细胞增殖、分化及存活等过程密切相关，可能在神经母细胞瘤的发生中起关键作用。
+hsa04664: Fc epsilon RI signaling pathway - 此信号通路与免疫反应和肿瘤微环境的调节有关，可能影响神经母细胞瘤的免疫逃逸。
+hsa04110: Cell cycle - 细胞周期通路与肿瘤的细胞增殖相关，可能是神经母细胞瘤研究中的重要通路。
+
+
+
+MAPK signaling pathway, Dopaminergic synapse, Cholinergic synapse, Axon guidance, Neurotrophin signaling pathway, VEGF signaling pathway, Glutamatergic synapse, GABAergic synapse, Serotonergic synapse, Retrograde endocannabinoid signaling
+
+Pathways of neurodegeneration - multiple diseases, Cell cycle, Central carbon metabolism in cancer, 

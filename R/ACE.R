@@ -58,15 +58,18 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
     Y <- Z
     n <- ncol(Y)
     p <- nrow(Y)
+    flip_sign <- 1
   } else {
     p <- nrow(Z); n1 <- ncol(Z); n2 <- ncol(X)
     if (n1 <= n2) {
       n <- n1
       Y <- matrix(0, p, n)
+      flip_sign <- 1
     } else {
       Y <- Z; Z <- X; X <- Y
       n1 <- ncol(Z); n2 <- ncol(X); n <- n1
       Y <- matrix(0, p, n)
+      flip_sign <- -1
     }
 
     for (jy in 1:n1){
@@ -112,7 +115,7 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
 
   Px <- t(W_piao) %*% solve(W_piao %*% t(W_piao)) %*% W_piao
   muB_hat <- Y %*% t(W_piao) %*% solve(W_piao %*% t(W_piao))
-  mu_hat <- muB_hat[,1]; B_hat <- muB_hat[,-1]
+  mu_hat <- muB_hat[,1] * flip_sign; B_hat <- muB_hat[,-1]
 
   T_k <- sqrt(n)*mu_hat
   sigma_hat <- (Y %*% (diag(n) - Px) %*% t(Y))/(n - h_hat - 1)

@@ -1,0 +1,25 @@
+,,FDR_ACE,power_ACE,FDR_Fan,power_Fan,FDR_BH,power_BH,FDR_BY,power_BY,FDR_e_BH,power_e_BH,Case,var
+0.2,factor,0.034,0.271,0.083,0.252,0.036,0.088,0.005,0.012,0,0,P1,Homoscedasticity
+,no factor,0.029,0.295,0.064,0.365,0.029,0.241,0.003,0.053,0,0,P1,Homoscedasticity
+0.05,factor,0.045,0.121,0.137,0.123,0.025,0.036,0,0.005,0,0,P1,Homoscedasticity
+,no factor,0.029,0.155,0.099,0.22,0.045,0.112,0,0.023,0,0,P1,Homoscedasticity
+0.2,factor,0.033,0.415,0.077,0.35,0.034,0.18,0.003,0.03,0,0,P2,Homoscedasticity
+,no factor,0.03,0.467,0.067,0.565,0.039,0.475,0.003,0.182,0,0.004,P2,Homoscedasticity
+0.05,factor,0.044,0.242,0.124,0.235,0.015,0.053,0.002,0.015,0,0,P2,Homoscedasticity
+,no factor,0.033,0.289,0.106,0.405,0.04,0.274,0.003,0.088,0,0.002,P2,Homoscedasticity
+0.2,factor,0.034,0.555,0.07,0.438,0.027,0.235,0.004,0.051,0,0.001,P3,Homoscedasticity
+,no factor,0.029,0.569,0.065,0.678,0.041,0.609,0.005,0.308,0.0003,0.073,P3,Homoscedasticity
+0.05,factor,0.044,0.349,0.126,0.294,0.047,0.106,0.002,0.019,0,0,P3,Homoscedasticity
+,no factor,0.038,0.376,0.098,0.535,0.048,0.422,0.007,0.163,0,0.005,P3,Homoscedasticity
+0.2,factor,0.035,0.316,0.087,0.331,0.029,0.14,0.003,0.015,0,0,P4,Heteroscedasticity
+,no factor,0.029,0.342,0.067,0.342,0.025,0.224,0.004,0.035,0,0,P4,Heteroscedasticity
+0.05,factor,0.037,0.148,0.112,0.204,0.029,0.042,0.005,0.006,0,0,P4,Heteroscedasticity
+,no factor,0.029,0.17,0.106,0.215,0.028,0.094,0.003,0.012,0,0,P4,Heteroscedasticity
+0.2,factor,0.031,0.462,0.076,0.49,0.033,0.313,0.005,0.071,0,0,P5,Heteroscedasticity
+,no factor,0.029,0.517,0.063,0.577,0.037,0.473,0.004,0.163,0,0.003,P5,Heteroscedasticity
+0.05,factor,0.037,0.273,0.115,0.358,0.018,0.12,0.009,0.026,0,0,P5,Heteroscedasticity
+,no factor,0.033,0.321,0.099,0.404,0.045,0.255,0.009,0.061,0,0,P5,Heteroscedasticity
+0.2,factor,0.033,0.611,0.069,0.619,0.027,0.43,0.006,0.123,0,0.002,P6,Heteroscedasticity
+,no factor,0.028,0.623,0.063,0.709,0.04,0.628,0.005,0.292,0,0.025,P6,Heteroscedasticity
+0.05,factor,0.042,0.421,0.116,0.442,0.041,0.215,0.004,0.047,0,0,P6,Heteroscedasticity
+,no factor,0.035,0.435,0.103,0.534,0.048,0.405,0.005,0.132,0,0.002,P6,Heteroscedasticity

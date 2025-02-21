@@ -1,6 +1,6 @@
 Package: ACE
 Title: Analysis of Correlated High-Dimensional Expression (ACE) Data
-Version: 0.4
+Version: 0.5
 Authors@R:
   c(person("Peng", "Wang", email = "wangpeng21@mails.jlu.edu.cn", role = c("aut", "cre")),
     person("Pengfei", "Lyu", email = "plyu@fsu.edu", role = "aut"),
