@@ -1,6 +1,6 @@
 Package: ACE
 Title: Analysis of Correlated High-Dimensional Expression (ACE) Data
-Version: 0.5
+Version: 0.5.1
 Authors@R:
   c(person("Peng", "Wang", email = "wangpeng21@mails.jlu.edu.cn", role = c("aut", "cre")),
     person("Pengfei", "Lyu", email = "plyu@fsu.edu", role = "aut"),
@@ -16,5 +16,5 @@ LazyData: false
 Depends: R (>= 3.6.0)
 Imports: quantreg, irlba
 Suggests: mvtnorm, MASS
-URL: https://github.com/hongyuan-cao/ACE
+URL: https://github.com/PengWang96/ACE
 RoxygenNote: 7.3.2

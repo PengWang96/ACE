@@ -95,30 +95,44 @@ ACE <- function(Z, X, H0_indicator, gama = 0.05, h_max = 20, h_fix = NULL, reg =
     h_hat <- h_fix
   }
 
-  if (h_hat == 1){
-    B_hat <- gamma_norm[,1:h_hat] * sqrt(lam_sort[1:h_hat])
-  } else {
-    B_hat <- gamma_norm[,1:h_hat] %*% diag(sqrt(lam_sort[1:h_hat]))
-  }
+  if (h_hat == 0){
+    B_hat <- 0
+    W0_hat <- 0
+    W_piao <- t(rep(1,n))
 
+    Px <- t(W_piao) %*% solve(W_piao %*% t(W_piao)) %*% W_piao
+    muB_hat <- Y %*% t(W_piao) %*% solve(W_piao %*% t(W_piao))
+    mu_hat <- muB_hat[,1] * flip_sign
 
-  if (reg == "L1") {
-    W0_hat <- matrix(0, h_hat, n)
-    for (jjj in 1:n) {
-      W0_hat[, jjj] <- rq(Y[, jjj] ~ B_hat - 1, tau = 0.5)$coef
+    T_k <- sqrt(n)*mu_hat
+    sigma_hat <- (Y %*% (diag(n) - Px) %*% t(Y))/(n - 1)
+
+  } else{
+    if (h_hat == 1){
+      B_hat <- gamma_norm[,1:h_hat] * sqrt(lam_sort[1:h_hat])
+    } else {
+      B_hat <- gamma_norm[,1:h_hat] %*% diag(sqrt(lam_sort[1:h_hat]))
     }
-  } else if (reg == "L2") {
-    W0_hat <- solve(t(B_hat) %*% B_hat) %*% t(B_hat) %*% Y
+
+    if (reg == "L1") {
+      W0_hat <- matrix(0, h_hat, n)
+      for (jjj in 1:n) {
+        W0_hat[, jjj] <- rq(Y[, jjj] ~ B_hat - 1, tau = 0.5)$coef
+      }
+    } else if (reg == "L2") {
+      W0_hat <- solve(t(B_hat) %*% B_hat) %*% t(B_hat) %*% Y
+    }
+
+    W_piao <- rbind(rep(1,n), W0_hat)
+
+    Px <- t(W_piao) %*% solve(W_piao %*% t(W_piao)) %*% W_piao
+    muB_hat <- Y %*% t(W_piao) %*% solve(W_piao %*% t(W_piao))
+    mu_hat <- muB_hat[,1] * flip_sign; B_hat <- muB_hat[,-1]
+
+    T_k <- sqrt(n)*mu_hat
+    sigma_hat <- (Y %*% (diag(n) - Px) %*% t(Y))/(n - h_hat - 1)
   }
 
-  W_piao <- rbind(rep(1,n), W0_hat)
-
-  Px <- t(W_piao) %*% solve(W_piao %*% t(W_piao)) %*% W_piao
-  muB_hat <- Y %*% t(W_piao) %*% solve(W_piao %*% t(W_piao))
-  mu_hat <- muB_hat[,1] * flip_sign; B_hat <- muB_hat[,-1]
-
-  T_k <- sqrt(n)*mu_hat
-  sigma_hat <- (Y %*% (diag(n) - Px) %*% t(Y))/(n - h_hat - 1)
   bbb <- sqrt(diag(sigma_hat))
   statistics <- T_k/bbb
   abs_stat <- abs(statistics)
